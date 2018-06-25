@@ -19,7 +19,7 @@ def simulacao():
 		if fila != []:
 			fila.sort()
 			#print('#DEBUG:\nClientes ativos', len(fila))
-			# Se um canal foi ser liberado
+			# Se um canal foi liberado
 			if fila[0] <= tempo:
 				fila.remove(fila[0])
 				ligacoes -= 1
