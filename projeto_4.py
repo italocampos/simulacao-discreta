@@ -13,7 +13,7 @@ def simulacao():
 	rejeitados = 0 # Número de clientes rejeitados
 	ligacoes = 0 # Número de ligações em cada unidade de tempo
 	tempo = 0 # Unidade de tempo atual
-	variancia = 60/100 # 100 ligações por minuto (equivale dizer que a cada 6/10 minuto, ocorrerá uma ligação). Expresso em segundos
+	taxa = 60/100 # 100 ligações por minuto (equivale dizer que a cada 6/10 minuto, ocorrerá uma ligação). Expresso em segundos
 	while tempo < 16 * hora:
 		# Se há linhas ocupadas
 		if fila != []:
@@ -24,7 +24,7 @@ def simulacao():
 				fila.remove(fila[0])
 				ligacoes -= 1
 		# Se houve uma solicitação
-		if random() < variancia:
+		if random() < taxa:
 			# Se há canais livres
 			if ligacoes <= max_ligacoes:
 				ligacoes += 1
@@ -33,8 +33,8 @@ def simulacao():
 			# Se todos os canais estão ocupados
 			else:
 				rejeitados += 1
-				congestionado += variancia
-		tempo += variancia
+				congestionado += taxa
+		tempo += taxa
 
 	print('# RESULTADOS')
 	print('Tempo de ocupação total dos canais: {h}h{m}m, {percent}%'.format(
