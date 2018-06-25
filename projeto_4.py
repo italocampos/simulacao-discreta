@@ -6,6 +6,7 @@ from math import exp
 def simulacao():
 	fila = [] # Fila com os tempos de ocupação de linha de cada cliente
 	hora = 3600 # Hora expressa em segundos
+	minuto = 60 # Minuto expresso em segundos
 	congestionado = 0 # Tempo de ocupação total dos canais
 	max_ligacoes = 65 # Número máximo de ligações
 	atendidos = 0 # Número de clientes atendidos
@@ -28,7 +29,7 @@ def simulacao():
 			if ligacoes <= max_ligacoes:
 				ligacoes += 1
 				atendidos += 1
-				fila.append(abs(gauss(4, 60)) + tempo) # adiciona à fila o tempo que o cliente vai ficar usando o canal
+				fila.append(abs(gauss(4 * minuto, minuto)) + tempo) # adiciona à fila o tempo que o cliente vai ficar usando o canal
 			# Se todos os canais estão ocupados
 			else:
 				rejeitados += 1
@@ -38,7 +39,7 @@ def simulacao():
 	print('# RESULTADOS')
 	print('Tempo de ocupação total dos canais: {h}h{m}m, {percent}%'.format(
 		h = int(congestionado / hora),
-		m = int(round((congestionado / hora - int(congestionado / hora)) * 60, 0)),
+		m = int(round((congestionado / hora - int(congestionado / hora)) * minuto, 0)),
 		percent = round(congestionado / tempo * 100, 2)
 		)
 	)
