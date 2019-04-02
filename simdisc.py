@@ -1,5 +1,6 @@
 import statistics as st
 import math
+from copy import copy
 
 # conjuntos de dados
 X = [0,3,1,6,3,4,1,3]
@@ -47,3 +48,22 @@ def coeficiente_variacao(conjunto):
 def coeficiente_assimetria(conjunto):
 	_, _, q3 = quartis(conjunto)
 	return q3/(mediana(conjunto)**(3/2))
+
+def moda(conjunto):
+	frequencias = []
+	i = 0
+	while i < len(conjunto):
+		frequencias.append((conjunto[i], conjunto.count(conjunto[i])))
+		conjunto = remove(conjunto[i], conjunto)
+	maior = frequencias[0]
+	for dic in frequencias[1:]:
+		if dic[1] > maior[1]:
+			maior = dic
+	return maior[0]
+
+def remove(elemento, conjunto):
+	copia = copy(conjunto)
+	for numero in conjunto:
+		if numero == elemento:
+			copia.remove(numero)
+	return copia
