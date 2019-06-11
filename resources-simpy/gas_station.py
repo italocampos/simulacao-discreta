@@ -29,6 +29,12 @@ class GasStation:
 				self.env.process(self.reabastece())
 				yield self.env.timeout(5)
 
+	def reabastece(self):
+		yield self.env.timeout(5)
+		print('Caminhão tanque chegou em', self.env.now)
+		yield self.tanque.put(self.tanque.capacity - self.tanque.level)
+		print('Reabastecido - tanque com %d litros' % (self.tanque.level))
+
 # Simulation startup
 import simpy
 env = simpy.Environment()
