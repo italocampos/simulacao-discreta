@@ -20,70 +20,72 @@ class Aeroporto:
     
     def aterrisar(self, aviao):
         yield self.env.timeout(aviao.chegada)
-        print('Aeronave %s do tipo %d requisitou pista de aterrisagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d requisitou pista de aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
         
         if aviao.tipo == 0:
             with self.pistaPequena.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(10)
         else:
             with self.pistaGrande.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(20)
                 
-        print('Aeronave %s do tipo %d finalizou aterrisagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d finalizou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
         self.env.process(self.desembarque(aviao))
         
     def desembarque(self, aviao):
         with self.plataforma.request() as req:
+            print('Aeronave %s do tipo %d aguarda por plataforma de desembarque em %d\n' % (aviao.nome, aviao.tipo, self.env.now))
             yield req
-            print('Aeronave %s do tipo %d iniciou desembarque em %d' % (aviao.nome, aviao.tipo , self.env.now))
+            print('Aeronave %s do tipo %d iniciou desembarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             if aviao.tipo == 0:
                 yield self.env.timeout(15)
             else:
                 yield self.env.timeout(30)
         
-        print('Aeronave %s do tipo %d finalizou desembarque em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d finalizou desembarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
         self.env.process(self.estacionar(aviao))
 
     def estacionar(self, aviao):
         with self.hangar.request() as req:
             yield req
-            print('Aeronave %s do tipo %d estacionou em um hangar em %d' % (aviao.nome, aviao.tipo , self.env.now))
+            print('Aeronave %s do tipo %d estacionou em um hangar em %d' % (aviao.nome, aviao.tipo, self.env.now))
             yield self.env.timeout(aviao.partida)
         
-        print('Aeronave %s do tipo %d saiu do hangar em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d saiu do hangar em %d' % (aviao.nome, aviao.tipo, self.env.now))
         self.env.process(self.embarque(aviao))
 
     def embarque(self, aviao):
         with self.plataforma.request() as req:
+            print('Aeronave %s do tipo %d aguarda por plataforma de embarque em %d\n' % (aviao.nome, aviao.tipo, self.env.now))
             yield req
-            print('Aeronave %s do tipo %d iniciou embarque em %d' % (aviao.nome, aviao.tipo , self.env.now))
+            print('Aeronave %s do tipo %d iniciou embarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             if aviao.tipo == 0:
                 yield self.env.timeout(30)
             else:
                 yield self.env.timeout(45)
         
-        print('Aeronave %s do tipo %d finalizou embarque em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d finalizou embarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
         self.env.process(self.decolar(aviao))
     
     def decolar(self, aviao):
-        print('Aeronave %s do tipo %d preparada para decolagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d preparada para decolagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
         
         if aviao.tipo == 0:
             with self.pistaPequena.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou decolagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+                print('Aeronave %s do tipo %d iniciou decolagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(10)
         else:
             with self.pistaGrande.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou decolagem em %d' % (aviao.nome, aviao.tipo , self.env.now))
+                print('Aeronave %s do tipo %d iniciou decolagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(20)
         
-        print('Aeronave %s do tipo %d decolou em %d' % (aviao.nome, aviao.tipo , self.env.now))
+        print('Aeronave %s do tipo %d decolou em %d' % (aviao.nome, aviao.tipo, self.env.now))
     
     
 env = simpy.Environment()
@@ -101,7 +103,7 @@ aeronaves = [Aviao(env, 'AV321-PA', 0, 0, 40),
     ]
 '''
 
-nomes = ['AV321-PA', 'AV155-MA', 'QR382-MT', 'SD348-SP', 'AC111-AC', 'DF879-CE', 'ZX422-PI', 'NN228-RJ', 'GF483-SP', 'DE322-MG', 'JI455-RS']
+nomes = ['AV321-PA', 'AV155-MA', 'QR382-MT', 'SD348-SP', 'AC111-AC', 'DF879-CE', 'ZX422-PI', 'NN228-RJ', 'GF483-SP', 'DE322-MG', 'JI455-RS', 'KP322-SE', 'OP544-PR', 'UT677-MS', 'JT877-TO']
 aeronaves = []
 chegadas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 50))
 partidas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 50))
@@ -127,8 +129,8 @@ for i in range(len(nomes)):
 
 pistaPequena = simpy.Resource(env, capacity=2)
 pistaGrande = simpy.Resource(env, capacity=1)
-plataforma = simpy.Resource(env, capacity=5)
-hangar = simpy.Resource(env, capacity=5)
+plataforma = simpy.Resource(env, capacity=3)
+hangar = simpy.Resource(env, capacity=4)
 
 aero = Aeroporto(env, pistaPequena, pistaGrande, plataforma, hangar)
 
