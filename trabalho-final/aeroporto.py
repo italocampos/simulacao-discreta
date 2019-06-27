@@ -18,22 +18,22 @@ class Aeroporto:
         self.plataforma = plataforma
         self.hangar = hangar
     
-    def aterrisar(self, aviao):
+    def aterrissar(self, aviao):
         yield self.env.timeout(aviao.chegada)
-        print('Aeronave %s do tipo %d requisitou pista de aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
+        print('Aeronave %s do tipo %d requisitou pista de aterrissagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
         
         if aviao.tipo == 0:
             with self.pistaPequena.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
+                print('Aeronave %s do tipo %d iniciou aterrissagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(10)
         else:
             with self.pistaGrande.request() as req:
                 yield req
-                print('Aeronave %s do tipo %d iniciou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
+                print('Aeronave %s do tipo %d iniciou aterrissagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
                 yield self.env.timeout(20)
                 
-        print('Aeronave %s do tipo %d finalizou aterrisagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
+        print('Aeronave %s do tipo %d finalizou aterrissagem em %d' % (aviao.nome, aviao.tipo, self.env.now))
         self.env.process(self.desembarque(aviao))
         
     def desembarque(self, aviao):
@@ -135,6 +135,6 @@ hangar = simpy.Resource(env, capacity=4)
 aero = Aeroporto(env, pistaPequena, pistaGrande, plataforma, hangar)
 
 for aviao in aeronaves:
-    env.process(aero.aterrisar(aviao))
+    env.process(aero.aterrissar(aviao))
 
 env.run()
