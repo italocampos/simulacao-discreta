@@ -103,8 +103,8 @@ aeronaves = [Aviao(env, 'AV321-PA', 0, 0, 40),
 '''
 nomes = ['AV321-PA', 'AV155-MA', 'QR382-MT', 'SD348-SP', 'AC111-AC', 'DF879-CE', 'ZX422-PI', 'NN228-RJ', 'GF483-SP', 'DE322-MG']
 aeronaves = []
-chegadas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 15))
-partidas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 15))
+chegadas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 50))
+partidas = list(st.expon.rvs(size = len(nomes), loc = 0, scale = 50))
 
 # Cria e incializa dos vetores de valores de chegadas e partidas
 chegadas_acc, partidas_acc = [chegadas[0]], [partidas[0]]
@@ -120,16 +120,16 @@ for i in range(len(partidas)):
 
 # Faz a lista de objetos
 for i in range(len(nomes)):
-    aeronaves.append(Aviao(env, nomes[i], randint(0, 1), int(chegadas_acc[i]), int(partidas_acc[i])))
+    aeronaves.append(Aviao(env, nomes[i], randint(0, 1), int(round(chegadas_acc[i])), int(round(partidas_acc[i])))
 
 #print('chegadas:', chegadas_acc)
 #print('partidas:', partidas_acc)
 '''
 
 pistaPequena = simpy.Resource(env, capacity=2)
-pistaGrande = simpy.Resource(env, capacity=2)
+pistaGrande = simpy.Resource(env, capacity=1)
 plataforma = simpy.Resource(env, capacity=5)
-hangar = simpy.Resource(env, capacity=7)
+hangar = simpy.Resource(env, capacity=5)
 
 aero = Aeroporto(env, pistaPequena, pistaGrande, plataforma, hangar)
 
