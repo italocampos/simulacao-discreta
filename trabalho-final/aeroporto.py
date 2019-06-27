@@ -38,7 +38,7 @@ class Aeroporto:
         
     def desembarque(self, aviao):
         with self.plataforma.request() as req:
-            print('Aeronave %s do tipo %d aguarda por plataforma de desembarque em %d\n' % (aviao.nome, aviao.tipo, self.env.now))
+            print('Aeronave %s do tipo %d aguarda por plataforma de desembarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             yield req
             print('Aeronave %s do tipo %d iniciou desembarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             if aviao.tipo == 0:
@@ -60,7 +60,7 @@ class Aeroporto:
 
     def embarque(self, aviao):
         with self.plataforma.request() as req:
-            print('Aeronave %s do tipo %d aguarda por plataforma de embarque em %d\n' % (aviao.nome, aviao.tipo, self.env.now))
+            print('Aeronave %s do tipo %d aguarda por plataforma de embarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             yield req
             print('Aeronave %s do tipo %d iniciou embarque em %d' % (aviao.nome, aviao.tipo, self.env.now))
             if aviao.tipo == 0:
