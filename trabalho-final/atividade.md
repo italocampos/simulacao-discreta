@@ -21,4 +21,4 @@ Para modelar este problema, considere que:
         - desembarque de aeronaves de grande porte: 30 minutos;
         - embarque de aeronaves de pequeno porte: 30 minutos;
         - embarque de aeronaves de grande porte: 45 minutos;
-    - despreze o tempo de locomoção das aeronaves nas dependências do aeroporto.
++ despreze o tempo de locomoção das aeronaves nas dependências do aeroporto.
